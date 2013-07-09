@@ -67,7 +67,7 @@ namespace PictureSyncManager
                 tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes.Add(item.Name);
             }
             tree.TopNode.Checked = true;
-            checkChildren(tree.TopNode);
+            //checkChildren(tree.TopNode, true);
             tree.ExpandAll();
             photosManager.disconnectDevice();
             waiting.Abort();
@@ -150,14 +150,39 @@ namespace PictureSyncManager
          * Check Node's Children in TreeView
          * Recursive
          * @param TreeNode
+         * @param bool - if true - check, false - uncheck
          * */
-        private void checkChildren(TreeNode root)
+        private void checkChildren(TreeNode root, bool check)
         {
             foreach (TreeNode node in root.Nodes)
             {
-                node.Checked = true;
-                if (node.Nodes.Count == 0) syncLbl.Text = (int.Parse(syncLbl.Text) + 1) + "";
-                checkChildren(node);
+                if (check)
+                {
+                    if (!node.Checked) node.Checked = true;
+                    if (node.Nodes.Count != 0) checkChildren(node, check);
+                }
+                else
+                {
+                    if (node.Checked) node.Checked = false;
+                    if (node.Nodes.Count == 0) checkChildren(node, check);
+                }
+            }
+        }
+
+        /*
+         * Action After Check Node in TreeView
+         * */
+        private void tree_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Checked)
+            {
+                if (e.Node.Nodes.Count == 0) syncLbl.Text = (int.Parse(syncLbl.Text) + 1) + "";
+                else checkChildren(e.Node,true);
+            }
+            else
+            {
+                if (e.Node.Nodes.Count == 0) syncLbl.Text = (int.Parse(syncLbl.Text) - 1) + "";
+                else checkChildren(e.Node, false);
             }
         }
     }

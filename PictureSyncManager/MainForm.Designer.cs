@@ -241,6 +241,7 @@
             this.tree.Name = "tree";
             this.tree.Size = new System.Drawing.Size(539, 307);
             this.tree.TabIndex = 3;
+            this.tree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterCheck);
             // 
             // PictureSyncManager
             // 
