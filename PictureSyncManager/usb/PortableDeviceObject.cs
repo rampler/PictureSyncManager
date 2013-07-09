@@ -13,6 +13,6 @@
 
         public string Name { get; private set; }
 
-        public string Date { get; private set; }
+        public string Date { get; set; }
     }
 }

@@ -122,6 +122,7 @@
             // 
             // updateBtn
             // 
+            this.updateBtn.Enabled = false;
             this.updateBtn.Location = new System.Drawing.Point(433, 11);
             this.updateBtn.Name = "updateBtn";
             this.updateBtn.Size = new System.Drawing.Size(93, 23);
@@ -154,7 +155,7 @@
             // 
             // listOfDevices
             // 
-            this.listOfDevices.FormattingEnabled = true;
+            this.listOfDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listOfDevices.Location = new System.Drawing.Point(83, 11);
             this.listOfDevices.Name = "listOfDevices";
             this.listOfDevices.Size = new System.Drawing.Size(152, 21);

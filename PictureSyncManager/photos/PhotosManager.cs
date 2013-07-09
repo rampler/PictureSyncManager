@@ -16,6 +16,11 @@ namespace PictureSyncManager.photos
         public LinkedList<PortableDeviceFile> getPhotos() { return photos; }
         public int getPhotosSize() { return photos.Count; }
 
+        /*
+         * Checking DCIM folder for photos and adding this photos to LinkedList
+         * Recursive
+         * @param PortableDeviceFolder
+         * */
         private void CheckFolderContents(PortableDeviceFolder folder)
         {
             foreach (var item in folder.Files)
@@ -39,6 +44,12 @@ namespace PictureSyncManager.photos
             }
         }
 
+        /*
+         * Checking foder for DCIM folder
+         * This function don't add photos to LinkedList of PortableDeviceFile
+         * Recursive
+         * @param PortableDeviceFolder
+         * */
         private void CheckFolderContentsNDCIM(PortableDeviceFolder folder)
         {
             foreach (var item in folder.Files)
@@ -51,6 +62,17 @@ namespace PictureSyncManager.photos
             }
         }
 
+        /**
+         * Changing dates to format: dd-mm-yyy
+         * */
+        private void changeDates()
+        {
+            foreach (var item in photos) item.Date = item.Date.Substring(8, 2) + "-" + item.Date.Substring(5, 2) + "-" + item.Date.Substring(0, 4);
+        }
+
+        /*
+         * Getting list of photos from DCIM folders on device
+         * */
         public void getPhotosfromDevice()
         {
             var folder = device.GetContents();
@@ -66,8 +88,12 @@ namespace PictureSyncManager.photos
             LinkedList<PortableDeviceFile> temp = new LinkedList<PortableDeviceFile>();
             foreach (var photo in photos.OrderBy(j => j.Date)) temp.AddFirst(photo);
             photos = temp;
+            changeDates();
         }
 
+        /*
+         * Return list of available devices
+         * */
         public LinkedList<string> devicesList()
         {
             LinkedList<string> devices = new LinkedList<string>();
@@ -82,6 +108,10 @@ namespace PictureSyncManager.photos
             return devices;
         }
 
+        /*
+         * Connect to device 
+         * @param deviceName
+         * */
         public void connectToDevice(string deviceName)
         {
             bool found = false;
@@ -96,14 +126,10 @@ namespace PictureSyncManager.photos
             else MessageBox.Show("Urządzenie odłączone!");
         }
 
+        /*
+         * Disconnect current device
+         * */
         public void disconnectDevice() { device.Disconnect();  }
-
-        //public LinkedList<string> getPhotosNames() //TODO - erase Date from Name
-        //{
-        //    LinkedList<string> list = new LinkedList<string>();
-        //    foreach (var photo in photos) list.AddLast(photo.Name + " - " + photo.Date);
-        //    return list;
-        //}
 
     }
 }
