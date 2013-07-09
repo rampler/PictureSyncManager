@@ -196,6 +196,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "About";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "O Programie";
             this.ResumeLayout(false);
             this.PerformLayout();

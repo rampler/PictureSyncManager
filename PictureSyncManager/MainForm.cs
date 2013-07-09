@@ -40,7 +40,15 @@ namespace PictureSyncManager
         {
             photosManager.connectToDevice(listOfDevices.Text);
             photosManager.getPhotosfromDevice();
-            listOfPhotos.Items.AddRange(photosManager.getPhotosNames().ToArray());
+            TreeNode[] array = new TreeNode[photosManager.getPhotosSize()];
+            int i = 0;
+            foreach(var item in photosManager.getPhotos())
+            {
+                array[i] = new TreeNode(item.Name);
+                i++;
+            }
+            tree.Nodes.Add(new TreeNode("Wszystkie",array));
+            tree.ExpandAll();
             photosManager.disconnectDevice();
         }
 
@@ -49,7 +57,7 @@ namespace PictureSyncManager
             try
             {
                 listOfDevices.Items.Clear();
-                listOfPhotos.Items.Clear();
+                tree.Nodes.Clear();
                 listOfDevices.Text = "";
                 listOfDevices.Items.AddRange(photosManager.devicesList().ToArray());
                 listOfDevices.Text = photosManager.devicesList().First.Value;

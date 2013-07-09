@@ -45,7 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.aboutBtn = new System.Windows.Forms.Button();
-            this.listOfPhotos = new System.Windows.Forms.CheckedListBox();
+            this.tree = new System.Windows.Forms.TreeView();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -230,27 +230,27 @@
             this.aboutBtn.UseVisualStyleBackColor = true;
             this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
             // 
-            // listOfPhotos
+            // tree
             // 
-            this.listOfPhotos.AllowDrop = true;
-            this.listOfPhotos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listOfPhotos.FormattingEnabled = true;
-            this.listOfPhotos.Location = new System.Drawing.Point(0, 71);
-            this.listOfPhotos.Name = "listOfPhotos";
-            this.listOfPhotos.ScrollAlwaysVisible = true;
-            this.listOfPhotos.Size = new System.Drawing.Size(539, 307);
-            this.listOfPhotos.TabIndex = 2;
-            this.listOfPhotos.UseCompatibleTextRendering = true;
+            this.tree.CheckBoxes = true;
+            this.tree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tree.HideSelection = false;
+            this.tree.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tree.Location = new System.Drawing.Point(0, 71);
+            this.tree.Name = "tree";
+            this.tree.Size = new System.Drawing.Size(539, 307);
+            this.tree.TabIndex = 3;
             // 
             // PictureSyncManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 412);
-            this.Controls.Add(this.listOfPhotos);
+            this.Controls.Add(this.tree);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.Name = "PictureSyncManager";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Picture Sync Manager";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -278,12 +278,12 @@
         private System.Windows.Forms.Button updateBtn;
         private System.Windows.Forms.CheckBox onlyNewBox;
         private System.Windows.Forms.Button refreshBtn;
-        private System.Windows.Forms.CheckedListBox listOfPhotos;
         private System.Windows.Forms.Button folderPathBtn;
         private System.Windows.Forms.TextBox pathBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button aboutBtn;
+        private System.Windows.Forms.TreeView tree;
     }
 }
 

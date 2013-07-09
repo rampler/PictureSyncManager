@@ -13,6 +13,9 @@ namespace PictureSyncManager.photos
         private PortableDeviceCollection collection = new PortableDeviceCollection();
         private PortableDevice device;
 
+        public LinkedList<PortableDeviceFile> getPhotos() { return photos; }
+        public int getPhotosSize() { return photos.Count; }
+
         private void CheckFolderContents(PortableDeviceFolder folder)
         {
             foreach (var item in folder.Files)
@@ -51,6 +54,7 @@ namespace PictureSyncManager.photos
         public void getPhotosfromDevice()
         {
             var folder = device.GetContents();
+            photos.Clear();
             foreach (var item in folder.Files)
             {
                 if (item is PortableDeviceFolder)
@@ -59,7 +63,9 @@ namespace PictureSyncManager.photos
                     else CheckFolderContentsNDCIM((PortableDeviceFolder)item);
                 }
             }
-            
+            LinkedList<PortableDeviceFile> temp = new LinkedList<PortableDeviceFile>();
+            foreach (var photo in photos.OrderBy(j => j.Date)) temp.AddFirst(photo);
+            photos = temp;
         }
 
         public LinkedList<string> devicesList()
@@ -92,12 +98,12 @@ namespace PictureSyncManager.photos
 
         public void disconnectDevice() { device.Disconnect();  }
 
-        public LinkedList<string> getPhotosNames() //TODO - erase Date from Name
-        {
-            LinkedList<string> list = new LinkedList<string>();
-            foreach (var photo in photos.OrderBy(j => j.Date)) list.AddFirst(photo.Name + " - " + photo.Date);
-            return list;
-        }
-       
+        //public LinkedList<string> getPhotosNames() //TODO - erase Date from Name
+        //{
+        //    LinkedList<string> list = new LinkedList<string>();
+        //    foreach (var photo in photos) list.AddLast(photo.Name + " - " + photo.Date);
+        //    return list;
+        //}
+
     }
 }
