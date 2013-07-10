@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PictureSyncManager));
             this.panel1 = new System.Windows.Forms.Panel();
             this.syncLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,6 +65,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.downloadPanel = new System.Windows.Forms.Panel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.waitingPanel = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -74,6 +77,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
             this.downloadPanel.SuspendLayout();
+            this.waitingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -458,15 +462,39 @@
             this.progressBar.Size = new System.Drawing.Size(519, 23);
             this.progressBar.TabIndex = 0;
             // 
+            // waitingPanel
+            // 
+            this.waitingPanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.waitingPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.waitingPanel.Controls.Add(this.label11);
+            this.waitingPanel.Location = new System.Drawing.Point(140, 190);
+            this.waitingPanel.Name = "waitingPanel";
+            this.waitingPanel.Size = new System.Drawing.Size(276, 55);
+            this.waitingPanel.TabIndex = 2;
+            this.waitingPanel.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label11.ForeColor = System.Drawing.Color.Blue;
+            this.label11.Location = new System.Drawing.Point(12, 19);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(252, 19);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Pobieranie listy zdjęć z urządzenia...";
+            // 
             // PictureSyncManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 412);
+            this.Controls.Add(this.waitingPanel);
             this.Controls.Add(this.downloadPanel);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictureSyncManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Picture Sync Manager";
@@ -484,6 +512,8 @@
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
             this.downloadPanel.ResumeLayout(false);
+            this.waitingPanel.ResumeLayout(false);
+            this.waitingPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -526,6 +556,8 @@
         private System.Windows.Forms.ComboBox listOfDevices;
         private System.Windows.Forms.TextBox pathBox;
         private System.Windows.Forms.TreeView tree;
+        private System.Windows.Forms.Panel waitingPanel;
+        private System.Windows.Forms.Label label11;
     }
 }
 

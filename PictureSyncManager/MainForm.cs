@@ -56,17 +56,18 @@ namespace PictureSyncManager
         /*
          * Update list of avaible devices and clear tree
          * */
-        private void updateBtn_Click(object sender, EventArgs e)
+        private void updateTree()
         {
-            System.Threading.Thread waiting = new System.Threading.Thread(new System.Threading.ThreadStart(WaitingThread));
-            waiting.Start();
+            waitingPanel.Visible = true;
+            Application.DoEvents();
             tree.Nodes.Clear();
             photosManager.connectToDevice(listOfDevices.Text);
-            photosManager.getPhotosfromDevice();
+            if (onlyNewBox.Checked) photosManager.getPhotosfromDevice(pathBox.Text);
+            else photosManager.getPhotosfromDevice();
             tree.Nodes.Add(new TreeNode("Wszystkie"));
             string latestDate = "";
             int actualDateIndex = 0;
-            foreach(var item in photosManager.getPhotos())
+            foreach (var item in photosManager.getPhotos())
             {
                 if (!latestDate.Equals(item.Date))
                 {
@@ -79,8 +80,10 @@ namespace PictureSyncManager
             tree.TopNode.Checked = true;
             tree.ExpandAll();
             photosManager.disconnectDevice();
-            waiting.Abort();
+            waitingPanel.Visible = false;
         }
+
+        private void updateBtn_Click(object sender, EventArgs e) { updateTree(); }
 
         /*
          * Refresh List of Photos avaible on device.
@@ -129,14 +132,6 @@ namespace PictureSyncManager
         private static void AboutThread()
         {
             Application.Run(new About());
-        }
-
-        /*
-         * Starting Waiting Dialog Thread
-         * */
-        private static void WaitingThread()
-        {
-            Application.Run(new WaitingDialog());
         }
 
         /*
@@ -253,19 +248,16 @@ namespace PictureSyncManager
             downloadPanel.Visible = true;
             photosManager.connectToDevice(listOfDevices.Text);
             foreach (TreeNode parent in tree.Nodes[0].Nodes)
-            {
                 foreach (TreeNode node in parent.Nodes)
-                {
                     if (node.Checked)
                     {
                         progressBar.Value = ((i*100) / int.Parse(syncLbl.Text));
                         photosManager.downloadPhoto(findPhoto(node), pathBox.Text);
                         i++;
                     }
-                }
-            }
             photosManager.disconnectDevice();
             downloadPanel.Visible = false;
+            if (onlyNewBox.Checked) updateTree();
         }
     }
 }
