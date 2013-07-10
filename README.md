@@ -6,7 +6,8 @@ License GNU/GPL.
 
 It's my first bigger project in C# written for my dad.
 
-Status: In progress..
+Actual version: 1.0.0
+<a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_0_0.zip/download">Download</a>
 
 <b>Special thanks to:</b>
  - Christophe Geers - http://cgeers.com/ - for tutorials about WPD.
