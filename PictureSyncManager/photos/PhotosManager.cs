@@ -15,6 +15,7 @@ namespace PictureSyncManager.photos
         private string dateFormat = "yyyy_mm_dd";
 
         public LinkedList<PortableDeviceFile> getPhotos() { return photos; }
+
         public int getPhotosSize() { return photos.Count; }
 
         /*
@@ -87,6 +88,8 @@ namespace PictureSyncManager.photos
         public void setDateFormat(string format) { dateFormat = format; }
         /*
          * Getting list of photos from DCIM folders on device
+         * - without params - all
+         * @param string - gallery path - only new photos
          * */
         public void getPhotosfromDevice()
         {
@@ -104,6 +107,15 @@ namespace PictureSyncManager.photos
             foreach (var photo in photos.OrderBy(j => j.Date)) temp.AddFirst(photo);
             photos = temp;
             changeDates();
+        }
+
+        public void getPhotosfromDevice(string galleryPath)
+        {
+            getPhotosfromDevice();
+            LinkedList<PortableDeviceFile> temp = new LinkedList<PortableDeviceFile>();
+            foreach (var photo in photos)
+                if (!System.IO.File.Exists(galleryPath + "/" + photo.Date + "/" + photo.Name)) temp.AddLast(photo);
+            photos = temp;
         }
 
         /*

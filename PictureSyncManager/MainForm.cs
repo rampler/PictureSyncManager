@@ -61,6 +61,7 @@ namespace PictureSyncManager
             waitingPanel.Visible = true;
             Application.DoEvents();
             tree.Nodes.Clear();
+            syncLbl.Text = "0";
             photosManager.connectToDevice(listOfDevices.Text);
             if (onlyNewBox.Checked) photosManager.getPhotosfromDevice(pathBox.Text);
             else photosManager.getPhotosfromDevice();
@@ -197,12 +198,12 @@ namespace PictureSyncManager
         {
             if (e.Node.Checked)
             {
-                if (e.Node.Nodes.Count == 0) syncLbl.Text = (int.Parse(syncLbl.Text) + 1) + "";
+                if (e.Node.Nodes.Count == 0 && !e.Node.Text.Equals("Wszystkie")) syncLbl.Text = (int.Parse(syncLbl.Text) + 1) + "";
                 else checkChildren(e.Node,true);
             }
             else
             {
-                if (e.Node.Nodes.Count == 0) syncLbl.Text = (int.Parse(syncLbl.Text) - 1) + "";
+                if (e.Node.Nodes.Count == 0 && !e.Node.Text.Equals("Wszystkie")) syncLbl.Text = (int.Parse(syncLbl.Text) - 1) + "";
                 else checkChildren(e.Node, false);
             }
         }
@@ -213,7 +214,7 @@ namespace PictureSyncManager
          * */
         private void tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Nodes.Count == 0)
+            if (e.Node.Nodes.Count == 0 && !e.Node.Text.Equals("Wszystkie"))
             {
                 if (preview.Image != null) preview.Image.Dispose();
                 PortableDeviceFile photo = findPhoto(e.Node);
