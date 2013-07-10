@@ -63,11 +63,16 @@ namespace PictureSyncManager.photos
         }
 
         /**
-         * Changing dates to format: dd-mm-yyy
+         * Changing dates to format: dd-mm-yyy and time to format: hh:mm
+         *
          * */
         private void changeDates()
         {
-            foreach (var item in photos) item.Date = item.Date.Substring(8, 2) + "-" + item.Date.Substring(5, 2) + "-" + item.Date.Substring(0, 4);
+            foreach (var item in photos)
+            {
+                item.Time = item.Date.Substring(11, 5);
+                item.Date = item.Date.Substring(8, 2) + "-" + item.Date.Substring(5, 2) + "-" + item.Date.Substring(0, 4);
+            }
         }
 
         /*
@@ -130,6 +135,20 @@ namespace PictureSyncManager.photos
          * Disconnect current device
          * */
         public void disconnectDevice() { device.Disconnect();  }
+
+        /*
+         * Download photo to gallery
+         * Directory - date
+         * If directory doesn't exits - create it
+         * @param PortableDeviceFile - photo to download
+         * @param string - gallery path
+         * */
+        public void downloadPhoto(PortableDeviceFile item, string path) 
+        {
+            string folderPath = System.IO.Path.Combine(path, item.Date);
+            if (!System.IO.Directory.Exists(folderPath)) System.IO.Directory.CreateDirectory(folderPath);
+            device.DownloadFile(item, System.IO.Path.Combine(folderPath, item.Name)); 
+        }
 
     }
 }

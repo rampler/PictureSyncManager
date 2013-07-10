@@ -95,7 +95,7 @@ namespace PictureSyncManager
 
         public PortableDeviceFolder GetContents()
         {
-            var root = new PortableDeviceFolder("DEVICE", "DEVICE", "DEVICE");
+            var root = new PortableDeviceFolder("DEVICE", "DEVICE", "DEVICE", "DEVICE");
 
             IPortableDeviceContent content;
             this._device.Content(out content);
@@ -184,6 +184,7 @@ namespace PictureSyncManager
             // Get the name of the object
             string name;
             string date;
+            string size;
             var property = new _tagpropertykey();
             property.fmtid = new Guid(0xEF6B490D, 0x5CD8, 0x437A, 0xAF, 0xFC,
                                       0xDA, 0x8B, 0x60, 0xEE, 0x4A, 0x3C);
@@ -207,14 +208,16 @@ namespace PictureSyncManager
 
             if (contentType == folderType || contentType == functionalType)
             {
-                return new PortableDeviceFolder(objectId, name, "");
+                return new PortableDeviceFolder(objectId, name, "", "");
             }
 
             property.pid = 12;//WPD_OBJECT_ORIGINAL_FILE_NAME
             values.GetStringValue(property, out name);
             property.pid = 19;//WPD_OBJECT_DATE_MODIFIED
             values.GetStringValue(property, out date);
-            return new PortableDeviceFile(objectId, name, date);
+            property.pid = 11;//WPD_OBJECT_SIZE
+            values.GetStringValue(property, out size);
+            return new PortableDeviceFile(objectId, name, date, size);
         }
 
         #endregion

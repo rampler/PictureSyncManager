@@ -185,5 +185,34 @@ namespace PictureSyncManager
                 else checkChildren(e.Node, false);
             }
         }
+
+        /*
+         * Action After Select Node in TreeView
+         * Display Preview if photo
+         * */
+        private void tree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Nodes.Count == 0)
+            {
+                PortableDeviceFile photo = findPhoto(e.Node);
+                nameLbl.Text = photo.Name;
+                dateLbl.Text = photo.Date;
+                timeLbl.Text = photo.Time;
+                if (int.Parse(photo.Size) < 1024) sizeLbl.Text = photo.Size + " B";
+                else if (int.Parse(photo.Size) < (1024 * 1024)) sizeLbl.Text = Math.Round((double.Parse(photo.Size) / 1024),1) + " kB";
+                else sizeLbl.Text = Math.Round((double.Parse(photo.Size) / (1024*1024)), 1) + " MB";
+            }
+        }
+
+        /*
+         * Find Photo by Selected Node
+         * */
+        private PortableDeviceFile findPhoto(TreeNode node)
+        {
+            int index = 0;
+            for (int i = 0; i < node.Parent.Index; i++) index += tree.Nodes[0].Nodes[i].Nodes.Count;
+            index += node.Index;
+            return photosManager.getPhotos().ElementAt(index);
+        }
     }
 }
