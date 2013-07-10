@@ -14,7 +14,7 @@ namespace PictureSyncManager
 {
     public partial class PictureSyncManager : Form
     {
-        private PhotosManager photosManager = new PhotosManager(); 
+        private static PhotosManager photosManager = new PhotosManager(); 
 
         /*
          * Constructor 
@@ -25,15 +25,25 @@ namespace PictureSyncManager
         public PictureSyncManager()
         {
             InitializeComponent();
+            if (!Directory.Exists("data")) Directory.CreateDirectory("data");
             try
             {
-                FileStream file = new FileStream("path.txt", FileMode.Open, FileAccess.Read);
+                FileStream file = new FileStream("data/path.txt", FileMode.Open, FileAccess.Read);
                 StreamReader reader = new StreamReader(file);
                 pathBox.Text = reader.ReadLine();
                 reader.Close();
                 file.Close();
             }
             catch (IOException ex) { pathBox.Text = "C:\\"; }
+            try
+            {
+                FileStream file = new FileStream("data/format.txt", FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(file);
+                dateFormatBox.Text = reader.ReadLine();
+                reader.Close();
+                file.Close();
+            }
+            catch (IOException ex) { dateFormatBox.Text = "yyyy_mm_dd"; }
             try
             {
                 listOfDevices.Items.AddRange(photosManager.devicesList().ToArray());
@@ -67,7 +77,6 @@ namespace PictureSyncManager
                 tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes.Add(item.Name);
             }
             tree.TopNode.Checked = true;
-            //checkChildren(tree.TopNode, true);
             tree.ExpandAll();
             photosManager.disconnectDevice();
             waiting.Abort();
@@ -137,13 +146,30 @@ namespace PictureSyncManager
         {
             try
             {
-                FileStream file = new FileStream("path.txt", FileMode.Create, FileAccess.Write);
+                FileStream file = new FileStream("data/path.txt", FileMode.Create, FileAccess.Write);
                 StreamWriter writer = new StreamWriter(file);
                 writer.Write(pathBox.Text);
                 writer.Close();
                 file.Close();
             }
             catch (IOException ex) { }
+        }
+        
+        /*
+         * Saving Date Format to "format.txt"
+         * */
+        private void dateFormatBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                FileStream file = new FileStream("data/format.txt", FileMode.Create, FileAccess.Write);
+                StreamWriter writer = new StreamWriter(file);
+                writer.Write(dateFormatBox.Text);
+                writer.Close();
+                file.Close();
+            }
+            catch (IOException ex) { }
+            photosManager.setDateFormat(dateFormatBox.Text);
         }
 
         /*
@@ -194,6 +220,7 @@ namespace PictureSyncManager
         {
             if (e.Node.Nodes.Count == 0)
             {
+                if (preview.Image != null) preview.Image.Dispose();
                 PortableDeviceFile photo = findPhoto(e.Node);
                 nameLbl.Text = photo.Name;
                 dateLbl.Text = photo.Date;
@@ -201,6 +228,8 @@ namespace PictureSyncManager
                 if (int.Parse(photo.Size) < 1024) sizeLbl.Text = photo.Size + " B";
                 else if (int.Parse(photo.Size) < (1024 * 1024)) sizeLbl.Text = Math.Round((double.Parse(photo.Size) / 1024),1) + " kB";
                 else sizeLbl.Text = Math.Round((double.Parse(photo.Size) / (1024*1024)), 1) + " MB";
+                photosManager.getPreview(photo, listOfDevices.Text);
+                preview.Image = Image.FromFile("data/bufor");
             }
         }
 
@@ -213,6 +242,30 @@ namespace PictureSyncManager
             for (int i = 0; i < node.Parent.Index; i++) index += tree.Nodes[0].Nodes[i].Nodes.Count;
             index += node.Index;
             return photosManager.getPhotos().ElementAt(index);
+        }
+
+        /*
+         * Download Checked photos
+         * */
+        private void syncBtn_Click(object sender, EventArgs e)
+        {
+            int i = 1;
+            downloadPanel.Visible = true;
+            photosManager.connectToDevice(listOfDevices.Text);
+            foreach (TreeNode parent in tree.Nodes[0].Nodes)
+            {
+                foreach (TreeNode node in parent.Nodes)
+                {
+                    if (node.Checked)
+                    {
+                        progressBar.Value = ((i*100) / int.Parse(syncLbl.Text));
+                        photosManager.downloadPhoto(findPhoto(node), pathBox.Text);
+                        i++;
+                    }
+                }
+            }
+            photosManager.disconnectDevice();
+            downloadPanel.Visible = false;
         }
     }
 }

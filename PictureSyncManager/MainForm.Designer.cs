@@ -31,7 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.syncLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.syncBtn = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.updateBtn = new System.Windows.Forms.Button();
@@ -40,6 +40,8 @@
             this.listOfDevices = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dateFormatBox = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.folderPathBtn = new System.Windows.Forms.Button();
             this.pathBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,17 +51,19 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.sizeLbl = new System.Windows.Forms.Label();
+            this.timeLbl = new System.Windows.Forms.Label();
+            this.dateLbl = new System.Windows.Forms.Label();
+            this.nameLbl = new System.Windows.Forms.Label();
+            this.preview = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.nameLbl = new System.Windows.Forms.Label();
-            this.dateLbl = new System.Windows.Forms.Label();
-            this.timeLbl = new System.Windows.Forms.Label();
-            this.sizeLbl = new System.Windows.Forms.Label();
+            this.downloadPanel = new System.Windows.Forms.Panel();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -68,14 +72,15 @@
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
+            this.downloadPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.syncLbl);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.syncBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 378);
             this.panel1.Name = "panel1";
@@ -100,15 +105,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Liczba plików do synchronizacji:";
             // 
-            // button1
+            // syncBtn
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.Location = new System.Drawing.Point(464, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Synchronizuj";
-            this.button1.UseVisualStyleBackColor = true;
+            this.syncBtn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.syncBtn.Location = new System.Drawing.Point(464, 0);
+            this.syncBtn.Name = "syncBtn";
+            this.syncBtn.Size = new System.Drawing.Size(75, 34);
+            this.syncBtn.TabIndex = 0;
+            this.syncBtn.Text = "Synchronizuj";
+            this.syncBtn.UseVisualStyleBackColor = true;
+            this.syncBtn.Click += new System.EventHandler(this.syncBtn_Click);
             // 
             // tabControl1
             // 
@@ -191,6 +197,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.Controls.Add(this.dateFormatBox);
+            this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.folderPathBtn);
             this.tabPage2.Controls.Add(this.pathBox);
             this.tabPage2.Controls.Add(this.label3);
@@ -201,9 +209,35 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Zapis";
             // 
+            // dateFormatBox
+            // 
+            this.dateFormatBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dateFormatBox.FormattingEnabled = true;
+            this.dateFormatBox.Items.AddRange(new object[] {
+            "yyyy_mm_dd",
+            "yyyy-mm-dd",
+            "yyyy.mm.dd",
+            "dd_mm_yyyy",
+            "dd-mm-yyyy",
+            "dd.mm.yyyy"});
+            this.dateFormatBox.Location = new System.Drawing.Point(417, 12);
+            this.dateFormatBox.Name = "dateFormatBox";
+            this.dateFormatBox.Size = new System.Drawing.Size(106, 21);
+            this.dateFormatBox.TabIndex = 4;
+            this.dateFormatBox.SelectedIndexChanged += new System.EventHandler(this.dateFormatBox_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(346, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Format daty:";
+            // 
             // folderPathBtn
             // 
-            this.folderPathBtn.Location = new System.Drawing.Point(499, 11);
+            this.folderPathBtn.Location = new System.Drawing.Point(316, 11);
             this.folderPathBtn.Name = "folderPathBtn";
             this.folderPathBtn.Size = new System.Drawing.Size(24, 23);
             this.folderPathBtn.TabIndex = 2;
@@ -215,7 +249,7 @@
             // 
             this.pathBox.Location = new System.Drawing.Point(107, 13);
             this.pathBox.Name = "pathBox";
-            this.pathBox.Size = new System.Drawing.Size(386, 20);
+            this.pathBox.Size = new System.Drawing.Size(200, 20);
             this.pathBox.TabIndex = 1;
             this.pathBox.Text = "C:\\";
             this.pathBox.TextChanged += new System.EventHandler(this.pathBox_TextChanged);
@@ -289,7 +323,7 @@
             this.panel3.Controls.Add(this.timeLbl);
             this.panel3.Controls.Add(this.dateLbl);
             this.panel3.Controls.Add(this.nameLbl);
-            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Controls.Add(this.preview);
             this.panel3.Controls.Add(this.label9);
             this.panel3.Controls.Add(this.label8);
             this.panel3.Controls.Add(this.label7);
@@ -302,14 +336,50 @@
             this.panel3.Size = new System.Drawing.Size(200, 307);
             this.panel3.TabIndex = 4;
             // 
-            // pictureBox1
+            // sizeLbl
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(9, 128);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(181, 112);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
+            this.sizeLbl.AutoSize = true;
+            this.sizeLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.sizeLbl.Location = new System.Drawing.Point(52, 83);
+            this.sizeLbl.Name = "sizeLbl";
+            this.sizeLbl.Size = new System.Drawing.Size(0, 13);
+            this.sizeLbl.TabIndex = 11;
+            // 
+            // timeLbl
+            // 
+            this.timeLbl.AutoSize = true;
+            this.timeLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.timeLbl.Location = new System.Drawing.Point(108, 65);
+            this.timeLbl.Name = "timeLbl";
+            this.timeLbl.Size = new System.Drawing.Size(0, 13);
+            this.timeLbl.TabIndex = 10;
+            // 
+            // dateLbl
+            // 
+            this.dateLbl.AutoSize = true;
+            this.dateLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.dateLbl.Location = new System.Drawing.Point(93, 47);
+            this.dateLbl.Name = "dateLbl";
+            this.dateLbl.Size = new System.Drawing.Size(0, 13);
+            this.dateLbl.TabIndex = 9;
+            // 
+            // nameLbl
+            // 
+            this.nameLbl.AutoSize = true;
+            this.nameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.nameLbl.Location = new System.Drawing.Point(47, 30);
+            this.nameLbl.Name = "nameLbl";
+            this.nameLbl.Size = new System.Drawing.Size(0, 13);
+            this.nameLbl.TabIndex = 8;
+            // 
+            // preview
+            // 
+            this.preview.Location = new System.Drawing.Point(9, 128);
+            this.preview.Name = "preview";
+            this.preview.Size = new System.Drawing.Size(181, 172);
+            this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.preview.TabIndex = 6;
+            this.preview.TabStop = false;
             // 
             // label9
             // 
@@ -367,47 +437,33 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Informacje o zdjęciu:";
             // 
-            // nameLbl
+            // downloadPanel
             // 
-            this.nameLbl.AutoSize = true;
-            this.nameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.nameLbl.Location = new System.Drawing.Point(47, 30);
-            this.nameLbl.Name = "nameLbl";
-            this.nameLbl.Size = new System.Drawing.Size(0, 13);
-            this.nameLbl.TabIndex = 8;
+            this.downloadPanel.AccessibleRole = System.Windows.Forms.AccessibleRole.Dialog;
+            this.downloadPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.downloadPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.downloadPanel.Controls.Add(this.progressBar);
+            this.downloadPanel.Location = new System.Drawing.Point(4, 200);
+            this.downloadPanel.Name = "downloadPanel";
+            this.downloadPanel.Size = new System.Drawing.Size(532, 39);
+            this.downloadPanel.TabIndex = 5;
+            this.downloadPanel.Visible = false;
             // 
-            // dateLbl
+            // progressBar
             // 
-            this.dateLbl.AutoSize = true;
-            this.dateLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.dateLbl.Location = new System.Drawing.Point(93, 47);
-            this.dateLbl.Name = "dateLbl";
-            this.dateLbl.Size = new System.Drawing.Size(0, 13);
-            this.dateLbl.TabIndex = 9;
-            // 
-            // timeLbl
-            // 
-            this.timeLbl.AutoSize = true;
-            this.timeLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.timeLbl.Location = new System.Drawing.Point(108, 65);
-            this.timeLbl.Name = "timeLbl";
-            this.timeLbl.Size = new System.Drawing.Size(0, 13);
-            this.timeLbl.TabIndex = 10;
-            // 
-            // sizeLbl
-            // 
-            this.sizeLbl.AutoSize = true;
-            this.sizeLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.sizeLbl.Location = new System.Drawing.Point(52, 83);
-            this.sizeLbl.Name = "sizeLbl";
-            this.sizeLbl.Size = new System.Drawing.Size(0, 13);
-            this.sizeLbl.TabIndex = 11;
+            this.progressBar.Location = new System.Drawing.Point(5, 6);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(519, 23);
+            this.progressBar.TabIndex = 0;
             // 
             // PictureSyncManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 412);
+            this.Controls.Add(this.downloadPanel);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
@@ -426,7 +482,8 @@
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
+            this.downloadPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -434,27 +491,24 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button syncBtn;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label syncLbl;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox listOfDevices;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button updateBtn;
         private System.Windows.Forms.CheckBox onlyNewBox;
         private System.Windows.Forms.Button refreshBtn;
         private System.Windows.Forms.Button folderPathBtn;
-        private System.Windows.Forms.TextBox pathBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button aboutBtn;
-        private System.Windows.Forms.TreeView tree;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox preview;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -465,6 +519,13 @@
         private System.Windows.Forms.Label sizeLbl;
         private System.Windows.Forms.Label timeLbl;
         private System.Windows.Forms.Label dateLbl;
+        private System.Windows.Forms.ComboBox dateFormatBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel downloadPanel;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.ComboBox listOfDevices;
+        private System.Windows.Forms.TextBox pathBox;
+        private System.Windows.Forms.TreeView tree;
     }
 }
 

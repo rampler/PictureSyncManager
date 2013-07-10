@@ -136,7 +136,7 @@ namespace PictureSyncManager
             } while (fetched > 0);
         }
 
-        public void DownloadFile(PortableDeviceFile file, string saveToPath)
+        public void DownloadFile(PortableDeviceFile file, string saveToPath) 
         {
             IPortableDeviceContent content;
             this._device.Content(out content);
@@ -154,8 +154,7 @@ namespace PictureSyncManager
             resources.GetStream(file.Id, ref property, 0, ref optimalTransferSize, out wpdStream);
             
             System.Runtime.InteropServices.ComTypes.IStream sourceStream = (System.Runtime.InteropServices.ComTypes.IStream) wpdStream;
-            var filename = Path.GetFileName(file.Name);
-            FileStream targetStream = new FileStream(Path.Combine(saveToPath, filename), FileMode.Create, FileAccess.Write);
+            FileStream targetStream = new FileStream(saveToPath, FileMode.Create, FileAccess.Write);
                 
             unsafe
             {

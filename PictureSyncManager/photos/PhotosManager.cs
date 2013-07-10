@@ -12,6 +12,7 @@ namespace PictureSyncManager.photos
         private LinkedList<PortableDeviceFile> photos = new LinkedList<PortableDeviceFile>();
         private PortableDeviceCollection collection = new PortableDeviceCollection();
         private PortableDevice device;
+        private string dateFormat = "yyyy_mm_dd";
 
         public LinkedList<PortableDeviceFile> getPhotos() { return photos; }
         public int getPhotosSize() { return photos.Count; }
@@ -63,7 +64,7 @@ namespace PictureSyncManager.photos
         }
 
         /**
-         * Changing dates to format: dd-mm-yyy and time to format: hh:mm
+         * Changing dates to format: dateFormat and time to format: hh:mm
          *
          * */
         private void changeDates()
@@ -71,10 +72,19 @@ namespace PictureSyncManager.photos
             foreach (var item in photos)
             {
                 item.Time = item.Date.Substring(11, 5);
-                item.Date = item.Date.Substring(8, 2) + "-" + item.Date.Substring(5, 2) + "-" + item.Date.Substring(0, 4);
+                if (dateFormat.Equals("yyyy_mm_dd")) item.Date = item.Date.Substring(0, 4) + "_" + item.Date.Substring(5, 2) + "_" + item.Date.Substring(8, 2);
+                else if (dateFormat.Equals("yyyy-mm-dd")) item.Date = item.Date.Substring(0, 4) + "-" + item.Date.Substring(5, 2) + "-" + item.Date.Substring(8, 2);
+                else if (dateFormat.Equals("yyyy.mm.dd")) item.Date = item.Date.Substring(0, 4) + "." + item.Date.Substring(5, 2) + "." + item.Date.Substring(8, 2);
+                else if (dateFormat.Equals("dd_mm_yyyy")) item.Date = item.Date.Substring(8, 2) + "_" + item.Date.Substring(5, 2) + "_" + item.Date.Substring(0, 4);
+                else if (dateFormat.Equals("dd-mm-yyyy")) item.Date = item.Date.Substring(8, 2) + "-" + item.Date.Substring(5, 2) + "-" + item.Date.Substring(0, 4);
+                else if (dateFormat.Equals("dd.mm.yyyy")) item.Date = item.Date.Substring(8, 2) + "." + item.Date.Substring(5, 2) + "." + item.Date.Substring(0, 4);
             }
         }
 
+        /*
+         * Set Date Format
+         * */
+        public void setDateFormat(string format) { dateFormat = format; }
         /*
          * Getting list of photos from DCIM folders on device
          * */
@@ -148,6 +158,18 @@ namespace PictureSyncManager.photos
             string folderPath = System.IO.Path.Combine(path, item.Date);
             if (!System.IO.Directory.Exists(folderPath)) System.IO.Directory.CreateDirectory(folderPath);
             device.DownloadFile(item, System.IO.Path.Combine(folderPath, item.Name)); 
+        }
+
+        /*
+         * Get Preview
+         * Download file to bufor
+         * */
+        public void getPreview(PortableDeviceFile item, string deviceName) 
+        {
+            connectToDevice(deviceName);
+            try{ device.DownloadFile(item, "data/bufor"); }
+            catch (System.IO.IOException ex) { MessageBox.Show(ex.Message); }
+            disconnectDevice();
         }
 
     }
