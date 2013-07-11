@@ -30,19 +30,17 @@ namespace PictureSyncManager.photos
                 if (item is PortableDeviceFolder) CheckFolderContents((PortableDeviceFolder)item);
                 else if (item is PortableDeviceFile)
                 {
-                    if (item.Name.Length < 4) { }
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("jpg")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("JPG")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 4).Equals("JPEG")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 4).Equals("jpeg")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("png")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("PNG")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("bmp")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("BMP")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("GIF")) photos.AddLast((PortableDeviceFile)item);
-                    else if (item.Name.Substring(item.Name.Length - 3).Equals("gif")) photos.AddLast((PortableDeviceFile)item);
+                    string extension = System.IO.Path.GetExtension(item.Name);
+                    string[] popularPhotosExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".raw", ".tif", "tiff" };
+                    string[] anotherRawExtensions = { ".crw", ".cr2", ".dcs",".dcr", ".drf", ".k25", ".kdc",
+                            ".dng", ".bay", ".erf", ".raf", ".3fr", ".fff", ".mos", ".pnx", ".mef",
+                            ".mrw", ".nef", ".nrw", ".orf", ".rw2", ".ptx", ".pef", ".cap", ".iiq",
+                            ".eip", ".rwz", ".r3d", ".x3f", ".arw", ".srf", ".srz" };
+                    string[] videosExtensions = { ".avi", ".mov", ".mp4", "m4v", ".mxf", ".wmv", ".3gp", ".flv" };
+                    if (popularPhotosExtensions.Contains(extension.ToLower())) photos.AddLast((PortableDeviceFile)item);
+                    else if (videosExtensions.Contains(extension.ToLower())) photos.AddLast((PortableDeviceFile)item);
+                    else if (anotherRawExtensions.Contains(extension.ToLower())) photos.AddLast((PortableDeviceFile)item);
                 }
-                //device.DownloadFile((PortableDeviceFile)item, @"D:\KCS\");
             }
         }
 

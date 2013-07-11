@@ -224,8 +224,13 @@ namespace PictureSyncManager
                 if (int.Parse(photo.Size) < 1024) sizeLbl.Text = photo.Size + " B";
                 else if (int.Parse(photo.Size) < (1024 * 1024)) sizeLbl.Text = Math.Round((double.Parse(photo.Size) / 1024),1) + " kB";
                 else sizeLbl.Text = Math.Round((double.Parse(photo.Size) / (1024*1024)), 1) + " MB";
-                photosManager.getPreview(photo, listOfDevices.Text);
-                preview.Image = Image.FromFile("data/bufor");
+                string[] previewExtensions = { ".jpg", ".jpeg", ".tif", ".tiff", ".png", ".bmp", ".gif" };
+                if (previewExtensions.Contains(Path.GetExtension(photo.Name).ToLower()))
+                {
+                    photosManager.getPreview(photo, listOfDevices.Text);
+                    preview.Image = Image.FromFile("data/bufor");
+                }
+                else preview.Image = null;
             }
         }
 
