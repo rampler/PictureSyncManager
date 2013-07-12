@@ -240,8 +240,8 @@ namespace PictureSyncManager
                 dateLbl.Text = photo.Date;
                 timeLbl.Text = photo.Time;
                 if (int.Parse(photo.Size) < 1024) sizeLbl.Text = photo.Size + " B";
-                else if (int.Parse(photo.Size) < (1024 * 1024)) sizeLbl.Text = Math.Round((double.Parse(photo.Size) / 1024),1) + " kB";
-                else sizeLbl.Text = Math.Round((double.Parse(photo.Size) / (1024*1024)), 1) + " MB";
+                else if (int.Parse(photo.Size) < (1024 * 1024)) sizeLbl.Text = Math.Round((double.Parse(photo.Size) / 1024), 1) + " kB";
+                else sizeLbl.Text = Math.Round((double.Parse(photo.Size) / (1024 * 1024)), 1) + " MB";
                 if (previewExtensions.Contains(Path.GetExtension(photo.Name).ToLower()))
                 {
                     photosManager.getPreview(photo, listOfDevices.Text);
@@ -249,6 +249,7 @@ namespace PictureSyncManager
                 }
                 else preview.Image = null;
             }
+            else e.Node.Expand();
         }
 
         /*
