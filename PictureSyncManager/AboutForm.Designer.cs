@@ -61,7 +61,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 15);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Wersja:  1.1.0";
+            this.label2.Text = "Wersja:  1.2.0";
             // 
             // label3
             // 
@@ -165,7 +165,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(168, 15);
             this.label10.TabIndex = 11;
-            this.label10.Text = "Data wydania:  11 lipca 2013";
+            this.label10.Text = "Data wydania:  12 lipca 2013";
             // 
             // closeBtn
             // 

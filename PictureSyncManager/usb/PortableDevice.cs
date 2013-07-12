@@ -158,12 +158,12 @@ namespace PictureSyncManager
                 
             unsafe
             {
-                var buffer = new byte[1024];
+                var buffer = new byte[(4*1024*1024)]; //4MB bufor
                 int bytesRead;
                 do
                 {
-                    sourceStream.Read(buffer, 1024, new IntPtr(&bytesRead));
-                    targetStream.Write(buffer, 0, 1024);
+                    sourceStream.Read(buffer, (4*1024*1024), new IntPtr(&bytesRead));
+                    targetStream.Write(buffer, 0, (4*1024*1024));
                 } while (bytesRead > 0);
                 targetStream.Close();  
             }

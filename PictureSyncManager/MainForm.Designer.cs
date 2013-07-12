@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PictureSyncManager));
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.bottomPanel = new System.Windows.Forms.Panel();
             this.syncLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.syncBtn = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.updateBtn = new System.Windows.Forms.Button();
             this.onlyNewBox = new System.Windows.Forms.CheckBox();
@@ -51,7 +52,7 @@
             this.tree = new System.Windows.Forms.TreeView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.photoInfoPanel = new System.Windows.Forms.Panel();
             this.sizeLbl = new System.Windows.Forms.Label();
             this.timeLbl = new System.Windows.Forms.Label();
             this.dateLbl = new System.Windows.Forms.Label();
@@ -64,37 +65,40 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.downloadPanel = new System.Windows.Forms.Panel();
+            this.abortBtn = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.waitingPanel = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.bottomPanel.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.photoInfoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
             this.downloadPanel.SuspendLayout();
             this.waitingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // bottomPanel
             // 
-            this.panel1.Controls.Add(this.syncLbl);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.syncBtn);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 378);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(539, 34);
-            this.panel1.TabIndex = 0;
+            this.bottomPanel.Controls.Add(this.syncLbl);
+            this.bottomPanel.Controls.Add(this.label1);
+            this.bottomPanel.Controls.Add(this.syncBtn);
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 378);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(539, 34);
+            this.bottomPanel.TabIndex = 0;
             // 
             // syncLbl
             // 
             this.syncLbl.AutoSize = true;
-            this.syncLbl.Location = new System.Drawing.Point(176, 11);
+            this.syncLbl.Location = new System.Drawing.Point(148, 11);
             this.syncLbl.Name = "syncLbl";
             this.syncLbl.Size = new System.Drawing.Size(13, 13);
             this.syncLbl.TabIndex = 2;
@@ -105,9 +109,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 13);
+            this.label1.Size = new System.Drawing.Size(133, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Liczba plików do synchronizacji:";
+            this.label1.Text = "Liczba plików do pobrania:";
             // 
             // syncBtn
             // 
@@ -116,22 +120,22 @@
             this.syncBtn.Name = "syncBtn";
             this.syncBtn.Size = new System.Drawing.Size(75, 34);
             this.syncBtn.TabIndex = 0;
-            this.syncBtn.Text = "Synchronizuj";
+            this.syncBtn.Text = "Pobierz";
             this.syncBtn.UseVisualStyleBackColor = true;
             this.syncBtn.Click += new System.EventHandler(this.syncBtn_Click);
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(539, 71);
-            this.tabControl1.TabIndex = 1;
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(539, 71);
+            this.tabControl.TabIndex = 1;
             // 
             // tabPage1
             // 
@@ -146,7 +150,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(531, 45);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Synchronizacja";
+            this.tabPage1.Text = "Urządzenie";
             // 
             // updateBtn
             // 
@@ -211,7 +215,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(531, 45);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Zapis";
+            this.tabPage2.Text = "Opcje zapisu";
             // 
             // dateFormatBox
             // 
@@ -292,9 +296,12 @@
             this.tree.CheckBoxes = true;
             this.tree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tree.HideSelection = false;
+            this.tree.ImageIndex = 0;
+            this.tree.ImageList = this.imageList;
             this.tree.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tree.Location = new System.Drawing.Point(0, 0);
             this.tree.Name = "tree";
+            this.tree.SelectedImageIndex = 0;
             this.tree.Size = new System.Drawing.Size(339, 307);
             this.tree.TabIndex = 3;
             this.tree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterCheck);
@@ -303,7 +310,7 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.panel4);
-            this.panel2.Controls.Add(this.panel3);
+            this.panel2.Controls.Add(this.photoInfoPanel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 71);
             this.panel2.Name = "panel2";
@@ -319,26 +326,26 @@
             this.panel4.Size = new System.Drawing.Size(339, 307);
             this.panel4.TabIndex = 5;
             // 
-            // panel3
+            // photoInfoPanel
             // 
-            this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.sizeLbl);
-            this.panel3.Controls.Add(this.timeLbl);
-            this.panel3.Controls.Add(this.dateLbl);
-            this.panel3.Controls.Add(this.nameLbl);
-            this.panel3.Controls.Add(this.preview);
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.label8);
-            this.panel3.Controls.Add(this.label7);
-            this.panel3.Controls.Add(this.label6);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(339, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 307);
-            this.panel3.TabIndex = 4;
+            this.photoInfoPanel.BackColor = System.Drawing.Color.White;
+            this.photoInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.photoInfoPanel.Controls.Add(this.sizeLbl);
+            this.photoInfoPanel.Controls.Add(this.timeLbl);
+            this.photoInfoPanel.Controls.Add(this.dateLbl);
+            this.photoInfoPanel.Controls.Add(this.nameLbl);
+            this.photoInfoPanel.Controls.Add(this.preview);
+            this.photoInfoPanel.Controls.Add(this.label9);
+            this.photoInfoPanel.Controls.Add(this.label8);
+            this.photoInfoPanel.Controls.Add(this.label7);
+            this.photoInfoPanel.Controls.Add(this.label6);
+            this.photoInfoPanel.Controls.Add(this.label5);
+            this.photoInfoPanel.Controls.Add(this.label4);
+            this.photoInfoPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.photoInfoPanel.Location = new System.Drawing.Point(339, 0);
+            this.photoInfoPanel.Name = "photoInfoPanel";
+            this.photoInfoPanel.Size = new System.Drawing.Size(200, 307);
+            this.photoInfoPanel.TabIndex = 4;
             // 
             // sizeLbl
             // 
@@ -448,16 +455,39 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.downloadPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.downloadPanel.Controls.Add(this.abortBtn);
+            this.downloadPanel.Controls.Add(this.label12);
             this.downloadPanel.Controls.Add(this.progressBar);
-            this.downloadPanel.Location = new System.Drawing.Point(4, 200);
+            this.downloadPanel.Location = new System.Drawing.Point(4, 171);
             this.downloadPanel.Name = "downloadPanel";
-            this.downloadPanel.Size = new System.Drawing.Size(532, 39);
+            this.downloadPanel.Size = new System.Drawing.Size(532, 68);
             this.downloadPanel.TabIndex = 5;
             this.downloadPanel.Visible = false;
             // 
+            // abortBtn
+            // 
+            this.abortBtn.Location = new System.Drawing.Point(446, 9);
+            this.abortBtn.Name = "abortBtn";
+            this.abortBtn.Size = new System.Drawing.Size(75, 23);
+            this.abortBtn.TabIndex = 2;
+            this.abortBtn.Text = "Anuluj";
+            this.abortBtn.UseVisualStyleBackColor = true;
+            this.abortBtn.Click += new System.EventHandler(this.abortBtn_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label12.ForeColor = System.Drawing.Color.Blue;
+            this.label12.Location = new System.Drawing.Point(7, 7);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(95, 19);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Pobieranie...";
+            // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(5, 6);
+            this.progressBar.Location = new System.Drawing.Point(5, 38);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(519, 23);
             this.progressBar.TabIndex = 0;
@@ -484,6 +514,15 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "Pobieranie listy zdjęć z urządzenia...";
             // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "device.png");
+            this.imageList.Images.SetKeyName(1, "folder.png");
+            this.imageList.Images.SetKeyName(2, "picture.png");
+            this.imageList.Images.SetKeyName(3, "movie.png");
+            // 
             // PictureSyncManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -492,15 +531,15 @@
             this.Controls.Add(this.waitingPanel);
             this.Controls.Add(this.downloadPanel);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.bottomPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictureSyncManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Picture Sync Manager";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.bottomPanel.ResumeLayout(false);
+            this.bottomPanel.PerformLayout();
+            this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -508,10 +547,11 @@
             this.tabPage3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.photoInfoPanel.ResumeLayout(false);
+            this.photoInfoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
             this.downloadPanel.ResumeLayout(false);
+            this.downloadPanel.PerformLayout();
             this.waitingPanel.ResumeLayout(false);
             this.waitingPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -520,9 +560,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel bottomPanel;
         private System.Windows.Forms.Button syncBtn;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label syncLbl;
@@ -536,7 +576,7 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button aboutBtn;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel photoInfoPanel;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox preview;
         private System.Windows.Forms.Label label9;
@@ -558,6 +598,9 @@
         private System.Windows.Forms.TreeView tree;
         private System.Windows.Forms.Panel waitingPanel;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button abortBtn;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ImageList imageList;
     }
 }
 

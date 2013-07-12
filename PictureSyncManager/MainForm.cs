@@ -14,7 +14,10 @@ namespace PictureSyncManager
 {
     public partial class PictureSyncManager : Form
     {
-        private static PhotosManager photosManager = new PhotosManager(); 
+        private static PhotosManager photosManager = new PhotosManager();
+        private bool isDownloadingStopped = false;
+        private string[] videosExtensions = { ".avi", ".mov", ".mp4", "m4v", ".mxf", ".wmv", ".3gp", ".flv" };
+        private string[] previewExtensions = { ".jpg", ".jpeg", ".tif", ".tiff", ".png", ".bmp", ".gif" };
 
         /*
          * Constructor 
@@ -67,19 +70,34 @@ namespace PictureSyncManager
             else photosManager.getPhotosfromDevice();
             tree.Nodes.Add(new TreeNode("Wszystkie"));
             string latestDate = "";
-            int actualDateIndex = 0;
+            int actualDateIndex = 0, actualItemInGroup = 0;
             foreach (var item in photosManager.getPhotos())
             {
                 if (!latestDate.Equals(item.Date))
                 {
                     tree.Nodes[0].Nodes.Add(item.Date);
+                    tree.Nodes[0].Nodes[actualDateIndex].ImageIndex = 1;
+                    tree.Nodes[0].Nodes[actualDateIndex].SelectedImageIndex = 1;
                     actualDateIndex++;
                     latestDate = item.Date;
+                    actualItemInGroup = 0;
                 }
                 tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes.Add(item.Name);
+                if (!videosExtensions.Contains(Path.GetExtension(item.Name)))
+                {
+                    tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes[actualItemInGroup].ImageIndex = 2;
+                    tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes[actualItemInGroup].SelectedImageIndex = 2;
+                }
+                else
+                {
+                    tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes[actualItemInGroup].ImageIndex = 3;
+                    tree.Nodes[0].Nodes[actualDateIndex - 1].Nodes[actualItemInGroup].SelectedImageIndex = 3;
+                }
+                actualItemInGroup++;
             }
-            tree.TopNode.Checked = true;
-            tree.ExpandAll();
+            tree.Nodes[0].Expand();
+            tree.SelectedNode = tree.Nodes[0];
+            tree.SelectedNode = null;
             photosManager.disconnectDevice();
             waitingPanel.Visible = false;
         }
@@ -224,7 +242,6 @@ namespace PictureSyncManager
                 if (int.Parse(photo.Size) < 1024) sizeLbl.Text = photo.Size + " B";
                 else if (int.Parse(photo.Size) < (1024 * 1024)) sizeLbl.Text = Math.Round((double.Parse(photo.Size) / 1024),1) + " kB";
                 else sizeLbl.Text = Math.Round((double.Parse(photo.Size) / (1024*1024)), 1) + " MB";
-                string[] previewExtensions = { ".jpg", ".jpeg", ".tif", ".tiff", ".png", ".bmp", ".gif" };
                 if (previewExtensions.Contains(Path.GetExtension(photo.Name).ToLower()))
                 {
                     photosManager.getPreview(photo, listOfDevices.Text);
@@ -251,19 +268,49 @@ namespace PictureSyncManager
         private void syncBtn_Click(object sender, EventArgs e)
         {
             int i = 1;
+            progressBar.Value = 0;
             downloadPanel.Visible = true;
-            photosManager.connectToDevice(listOfDevices.Text);
-            foreach (TreeNode parent in tree.Nodes[0].Nodes)
-                foreach (TreeNode node in parent.Nodes)
-                    if (node.Checked)
-                    {
-                        progressBar.Value = ((i*100) / int.Parse(syncLbl.Text));
-                        photosManager.downloadPhoto(findPhoto(node), pathBox.Text);
-                        i++;
-                    }
-            photosManager.disconnectDevice();
+            Application.DoEvents();
+            tabControl.Enabled = false;
+            syncBtn.Enabled = false;
+            tree.Enabled = false;
+
+            try
+            {
+                if (int.Parse(syncLbl.Text) == 0) throw new System.ApplicationException("Nie zaznaczono zdjęć do pobrania");
+                photosManager.connectToDevice(listOfDevices.Text);
+                foreach (TreeNode parent in tree.Nodes[0].Nodes)
+                    foreach (TreeNode node in parent.Nodes)
+                        if (node.Checked)
+                        {
+                            Application.DoEvents();
+                            if (isDownloadingStopped) throw new System.ApplicationException("Pobieranie przerwane przez użytkownika.");
+                            progressBar.Value = ((i * 100) / int.Parse(syncLbl.Text));
+                            photosManager.downloadPhoto(findPhoto(node), pathBox.Text);
+                            i++;
+                        }
+                photosManager.disconnectDevice();
+                if (onlyNewBox.Checked) updateTree();
+            }
+            catch (Exception ex) 
+            { 
+                MessageBox.Show(ex.Message);
+                if (onlyNewBox.Checked && isDownloadingStopped) updateTree();
+            };
+
+            isDownloadingStopped = false;
             downloadPanel.Visible = false;
-            if (onlyNewBox.Checked) updateTree();
+            tabControl.Enabled = true;
+            syncBtn.Enabled = true;
+            tree.Enabled = true;
+        }
+
+        /*
+         * Abort Downloading
+         * */
+        private void abortBtn_Click(object sender, EventArgs e)
+        {
+            isDownloadingStopped = true;
         }
     }
 }

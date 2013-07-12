@@ -4,17 +4,28 @@ Picture Sync Manager
 Windows software to synchronize photos from portable devices via MTP.
 License GNU/GPL.
 
-It's my first bigger project in C# written for my dad.
-Application search DCIM folders to find photos and videos.
+It's my first bigger project in C# written for my dad.<br />
+Application is searching DCIM folders to find photos and videos.
 
 Actual version: 1.1.0
 <a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_1_0.exe/download">Download</a><br />
 Language: Polish
+=======
+Actual version: 1.2.0
+<a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_2_0.exe/download">Download</a><br />
 
 <b>What's new:</b>
- - RAW file formats
- - Downloading vidos from device
-
+<p>&nbsp;&nbsp;Version 1.2.0:</p>
+<ul>
+	<li>6x faster downloading</li>
+	<li>Now you can abort downloading</li>
+	<li>Added icons and fixed lots of bugs</li>
+</ul>
+<p>&nbsp;&nbsp;Version 1.1.0:</p>
+<ul>
+	<li>RAW file formats</li>
+	<li>Downloading vidos from device</li>
+</ul>
 <b>Avaible file formats:</b>
  - Picture formats:
 		.jpg, .jpeg, .png, .gif, .bmp, .raw, .tif, tiff
