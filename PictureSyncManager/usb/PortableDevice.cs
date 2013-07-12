@@ -212,8 +212,16 @@ namespace PictureSyncManager
 
             property.pid = 12;//WPD_OBJECT_ORIGINAL_FILE_NAME
             values.GetStringValue(property, out name);
-            property.pid = 19;//WPD_OBJECT_DATE_MODIFIED
-            values.GetStringValue(property, out date);
+            try
+            {
+                property.pid = 19;//WPD_OBJECT_DATE_MODIFIED
+                values.GetStringValue(property, out date);
+            }
+            catch (Exception ex)
+            {
+                property.pid = 18;//WPD_OBJECT_DATE_MODIFIED
+                values.GetStringValue(property, out date);
+            }
             property.pid = 11;//WPD_OBJECT_SIZE
             values.GetStringValue(property, out size);
             return new PortableDeviceFile(objectId, name, date, size);
