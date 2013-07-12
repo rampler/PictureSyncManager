@@ -10,7 +10,7 @@ Application is searching DCIM folders to find photos and videos.
 Actual version: 1.1.0
 <a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_1_0.exe/download">Download</a><br />
 Language: Polish
-=======
+
 Actual version: 1.2.0
 <a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_2_0.exe/download">Download</a><br />
 
