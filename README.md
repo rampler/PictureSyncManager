@@ -7,11 +7,15 @@ License GNU/GPL.
 It's my first bigger project in C# written for my dad.<br />
 Application is searching DCIM folders to find photos and videos.
 
-Actual version: 1.2.2
-<a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_2_2.exe/download">Download</a><br />
+Actual version: 1.2.3
+<a href="http://sourceforge.net/projects/picturesyncmana/files/PictureSyncManager_v_1_2_3.exe/download">Download</a><br />
 Language: Polish
 
 <b>What's new:</b>
+<p>&nbsp;&nbsp;Version 1.2.3:</p>
+<ul>
+	<li>Fixed file size bug</li>
+</ul>
 <p>&nbsp;&nbsp;Version 1.2.2:</p>
 <ul>
 	<li>6x faster downloading</li>

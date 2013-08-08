@@ -95,7 +95,7 @@ namespace PictureSyncManager
 
         public PortableDeviceFolder GetContents()
         {
-            var root = new PortableDeviceFolder("DEVICE", "DEVICE", "DEVICE", "DEVICE");
+            var root = new PortableDeviceFolder("DEVICE", "DEVICE", "DEVICE", "DEVICE", 0);
 
             IPortableDeviceContent content;
             this._device.Content(out content);
@@ -158,12 +158,12 @@ namespace PictureSyncManager
                 
             unsafe
             {
-                var buffer = new byte[(4*1024*1024)]; //4MB bufor
+                var buffer = new byte[file.SizeB]; //4MB bufor
                 int bytesRead;
                 do
                 {
-                    sourceStream.Read(buffer, (4*1024*1024), new IntPtr(&bytesRead));
-                    targetStream.Write(buffer, 0, (4*1024*1024));
+                    sourceStream.Read(buffer, file.SizeB, new IntPtr(&bytesRead));
+                    targetStream.Write(buffer, 0, file.SizeB);
                 } while (bytesRead > 0);
                 targetStream.Close();  
             }
@@ -207,7 +207,7 @@ namespace PictureSyncManager
 
             if (contentType == folderType || contentType == functionalType)
             {
-                return new PortableDeviceFolder(objectId, name, "", "");
+                return new PortableDeviceFolder(objectId, name, "", "", 0);
             }
 
             property.pid = 12;//WPD_OBJECT_ORIGINAL_FILE_NAME
@@ -224,7 +224,7 @@ namespace PictureSyncManager
             }
             property.pid = 11;//WPD_OBJECT_SIZE
             values.GetStringValue(property, out size);
-            return new PortableDeviceFile(objectId, name, date, size);
+            return new PortableDeviceFile(objectId, name, date, size, Int32.Parse(size));
         }
 
         #endregion

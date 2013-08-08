@@ -4,7 +4,7 @@ namespace PictureSyncManager
 {
     public class PortableDeviceFolder : PortableDeviceObject
     {
-        public PortableDeviceFolder(string id, string name, string date, string size) : base(id, name, date, size)
+        public PortableDeviceFolder(string id, string name, string date, string size, int sizeB) : base(id, name, date, size, sizeB)
         {
             this.Files = new List<PortableDeviceObject>();
         }

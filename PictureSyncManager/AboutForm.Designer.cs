@@ -61,7 +61,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 15);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Wersja:  1.2.2";
+            this.label2.Text = "Wersja:  1.2.3";
             // 
             // label3
             // 
@@ -163,9 +163,9 @@
             this.label10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label10.Location = new System.Drawing.Point(104, 33);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(168, 15);
+            this.label10.Size = new System.Drawing.Size(179, 15);
             this.label10.TabIndex = 11;
-            this.label10.Text = "Data wydania:  12 lipca 2013";
+            this.label10.Text = "Data wydania:  8 sierpnia 2013";
             // 
             // closeBtn
             // 
@@ -181,7 +181,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(275, 232);
+            this.ClientSize = new System.Drawing.Size(284, 232);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.linkLabel2);
