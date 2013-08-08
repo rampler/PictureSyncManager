@@ -25,9 +25,9 @@ Language: Polish
 <p>&nbsp;&nbsp;Version 1.1.0:</p>
 <ul>
 	<li>RAW file formats</li>
-	<li>Downloading vidos from device</li>
+	<li>Downloading videos from device</li>
 </ul>
-<b>Avaible file formats:</b>
+<b>Available file formats:</b>
  - Picture formats:
 		.jpg, .jpeg, .png, .gif, .bmp, .raw, .tif, tiff
 		.crw, .cr2, .dcs,.dcr, .drf, .k25, .kdc,
